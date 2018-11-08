@@ -17,6 +17,7 @@ def top_error(link):
     """
     error_file = urllib.request.urlopen(link)
     counts = {}
+    # Go through the file and filter it so only the page is left
     for line in error_file:
         convert = (line.decode("utf-8"))
         filtered = re.search(r"(/var[a-zA-Z0-9/.]+)", convert)
@@ -29,11 +30,13 @@ def top_error(link):
 
     order_list = list(counts.values())
     order_list.sort(reverse=True)
-
+    errors = 0
     print("*** Top 25 page errors ***")
-    #while len(counts) > 0:
-    if len(counts)
+    while len(counts) > 0 & len(counts) < 26:
         next_value = order_list[0]
+        if errors > 25:
+            break
+        errors += 1
         for key, value in counts.items():
             if value == next_value:
                 print("Count: " + str(value) + " Page: " + str(key))
